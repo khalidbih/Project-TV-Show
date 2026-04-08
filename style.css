@@ -25,11 +25,11 @@
 }
 
 .episode-card:focus {
-  outline: 2px solid #007acc; 
+  outline: 2px solid #3a00cc; 
 }
 
 .episode-card img {
-  width: 100%;
+  width: 50%;
   display: block;
   margin: 10px 0;
   border-radius: 3px;
@@ -45,4 +45,12 @@
 .episode-card a:hover,
 .episode-card a:focus {
   color: #005fa3;
+}
+.episode-card h3 {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+  margin: 0 0 10px 0;
+  background-color: #eee;
+  font-size: 16px;
 }
