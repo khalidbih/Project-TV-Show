@@ -11,46 +11,50 @@
   column-gap: 15px;
   row-gap: 15px;
   margin: 20px 20px 20px 40px;
-  width: auto;
+  width: 95%;
   box-sizing: border-box;
 }
 
 .episode-card {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
+  border: 2px solid #656262;
+  border-radius: 10px;
+  background-color: white;
   padding: 10px;
   box-sizing: border-box;
-  outline: none; 
-}
-
-.episode-card:focus {
-  outline: 2px solid #3a00cc; 
+  text-align: center;
 }
 
 .episode-card img {
-  width: 50%;
+  width: 100%;
   display: block;
   margin: 10px 0;
-  border-radius: 3px;
+  border-radius: 1px;
 }
 
 .episode-card a {
   display: inline-block;
-  margin-top: 10px;
-  color: #007acc;
+  margin-top: 20px;
+  color: #286942;
   text-decoration: underline;
+  background-color: #e7f0ec;
+  border-radius: 18px;
+
 }
 
-.episode-card a:hover,
-.episode-card a:focus {
-  color: #005fa3;
-}
+
 .episode-card h3 {
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 1px solid #7d7878;
+  border-radius: 16px;
   padding: 8px;
   margin: 0 0 10px 0;
-  background-color: #eee;
+  background-color: #fffcfc;
+  font-size: 20px;
+}
+.episode-description {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-size: 16px;
+  line-height: 1.5;
+  color: black;
+  margin: 10px 0;
+  text-align: center; 
 }
