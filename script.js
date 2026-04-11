@@ -43,30 +43,31 @@ function renderEpisodes(episodes) {
     episodeElem.setAttribute("tabindex", "0");
 
     const code = `S${String(episode.season).padStart(2, "0")}E${String(episode.number).padStart(2, "0")}`;
-    const title = document.createElement("h3");
-    title.textContent = `${episode.name} - ${code}`;
-    episodeElem.appendChild(title);
+    const episodeTitle = document.createElement("h3");
+    episodeTitle.textContent = `${episode.name} - ${code}`;
+    episodeElem.appendChild(episodeTitle);
 
     if (episode.image && episode.image.medium) {
-      const img = document.createElement("img");
-      img.src = episode.image.medium;
-      img.alt = `${episode.name} thumbnail`;
-      episodeElem.appendChild(img);
+      const episodeImg = document.createElement("img");
+      episodeImg.src = episode.image.medium;
+      episodeImg.alt = `${episode.name} thumbnail`;
+      episodeElem.appendChild(episodeImg);
     }
 
-    const summary = document.createElement("p");
-    summary.classList.add("episode-description");
-    summary.textContent = episode.summary
+    const episodeSummary = document.createElement("p");
+    episodeSummary.classList.add("episode-description");
+    episodeSummary.textContent = episode.summary
       ? episode.summary.replace(/<[^>]+>/g, "")
       : "No summary available";
-    episodeElem.appendChild(summary);
+    episodeElem.appendChild(episodeSummary);
 
-    const link = document.createElement("a");
-    link.href = episode.url;
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.textContent = `Click here for "${episode.name}" episode source`;
-    episodeElem.appendChild(link);
+    const sourceLink = document.createElement("a");
+    sourceLink.className = "episode-link";
+    sourceLink.href = episode.url;
+    sourceLink.target = "_blank";
+    sourceLink.rel = "noopener";
+    sourceLink.textContent = `Click here for "${episode.name}" episode source`;
+    episodeElem.appendChild(sourceLink);
 
     cardsContainer.appendChild(episodeElem);
   });

@@ -8,11 +8,12 @@
 .episodes-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
-  column-gap: 15px;
-  row-gap: 16px;
-  margin: 20px 20px 20px 40px;
-  width: 95%;
+  column-gap: 25px;
+  row-gap: 25px;
   box-sizing: border-box;
+  width: 85%;  /* to shift the container in the center  */
+  margin: auto;
+  grid-auto-rows: 1fr; /* to maintain the same length of the rows */
 }
 
 .episode-card {
@@ -22,6 +23,9 @@
   padding: 10px;
   box-sizing: border-box;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .episode-card img {
@@ -33,11 +37,13 @@
 
 .episode-card a {
   display: inline-block;
-  margin-top: 20px;
+  margin-top: auto;
   color: #286942;
   text-decoration: underline;
   background-color: #e7f0ec;
   border-radius: 18px;
+  align-self: center;
+  margin-bottom: 5px;
 
 }
 
@@ -57,4 +63,5 @@
   color: black;
   margin: 10px 0;
   text-align: center; 
+  padding: 15px;
 }
