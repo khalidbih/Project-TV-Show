@@ -1,38 +1,28 @@
 //You can edit ALL of the code here
+const allEpisodes = getAllEpisodes();
 function setup() {
-  const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
+  const searchInput = document.getElementById("searchQuery");
+  //input event will only fire when the input in searchInput changes
+  searchInput.addEventListener("input", handleSearchInput);
+  renderEpisodes(allEpisodes);
 }
 
-function makePageForEpisodes(episodeList) {
-  const rootElem = document.getElementById("root");
-  rootElem.textContent = `Got ${episodeList.length} episode(s)`;
-}
-
-window.onload = setup;
-
-function setup() {
-  fetchEpisodes();
-}
-
-function fetchEpisodes() {
-  fetch("https://api.tvmaze.com/shows/82/episodes")
-    .then((res) => res.json())
-    .then((episodes) => {
-      renderEpisodes(episodes);
-    })
-    .catch((err) => console.error(err));
+function handleSearchInput(event) {
+  searchQuery = event.target.value.toLowerCase();
+  filteredEpisodes = allEpisodes.filter(
+    (episode) =>
+      episode.name.toLowerCase().includes(searchQuery) ||
+      episode.summary.toLocaleLowerCase().includes(searchQuery),
+  );
+  renderEpisodes(filteredEpisodes);
 }
 
 function renderEpisodes(episodes) {
   const rootElem = document.getElementById("root");
   rootElem.innerHTML = "";
 
-  const count = document.createElement("p");
-  count.textContent = `Got ${episodes.length} episode(s)`;
-  count.className = "episode-count";
-  rootElem.appendChild(count);
-
+  const search_bar_label = document.querySelector(".search_bar_label");
+  search_bar_label.textContent = `Displaying ${episodes.length}/${allEpisodes.length} episodes`;
   const cardsContainer = document.createElement("div");
   cardsContainer.className = "episodes-container";
   rootElem.appendChild(cardsContainer);
@@ -77,5 +67,4 @@ function renderEpisodes(episodes) {
     'Data provided by <a href="https://www.tvmaze.com/" target="_blank" rel="noopener">TVMaze.com</a>';
   rootElem.appendChild(attribution);
 }
-
 window.onload = setup;

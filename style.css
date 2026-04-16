@@ -1,9 +1,6 @@
 #root {
   color: rgb(0, 0, 0); 
 }
-.episode-count {
-  color: red; 
-}
 
 .episodes-container {
   display: grid;
@@ -64,4 +61,16 @@
   margin: 10px 0;
   text-align: center; 
   padding: 15px;
+}
+
+.search_bar{
+  font-size: large;
+  padding: 20px 0px 10px 0px;
+  margin: 10px 0px 20px 110px;
+}
+.search_bar input{
+  padding: 10px;
+  border-style: solid;
+  border-radius: 5px;
+  font-size: large;
 }
