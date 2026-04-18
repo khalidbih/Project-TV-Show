@@ -41,9 +41,7 @@
   border-radius: 18px;
   align-self: center;
   margin-bottom: 5px;
-
 }
-
 
 .episode-card h3 {
   border: 1px solid #7d7878;
@@ -65,10 +63,21 @@
 
 .search_bar{
   font-size: large;
-  padding: 20px 0px 10px 0px;
-  margin: 10px 0px 20px 110px;
+  display: flex;
+  justify-content: flex-start; 
+  padding: 20px 0;
+  width: 85%; 
+  gap: 20px;
+  align-items: center;
+  margin: 0 auto;
 }
 .search_bar input{
+  padding: 10px;
+  border-style: solid;
+  border-radius: 5px;
+  font-size: large;
+}
+.search_bar select{
   padding: 10px;
   border-style: solid;
   border-radius: 5px;

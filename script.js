@@ -1,13 +1,16 @@
 //You can edit ALL of the code here
 const allEpisodes = getAllEpisodes();
+const searchInput = document.getElementById("searchQuery");
+const selectEpisode = document.getElementById("select-episode");
 function setup() {
-  const searchInput = document.getElementById("searchQuery");
   //input event will only fire when the input in searchInput changes
   searchInput.addEventListener("input", handleSearchInput);
   renderEpisodes(allEpisodes);
+  populateSelectEpisodes(allEpisodes);
 }
 
 function handleSearchInput(event) {
+  selectEpisode.value = "";
   searchQuery = event.target.value.toLowerCase();
   filteredEpisodes = allEpisodes.filter(
     (episode) =>
@@ -15,6 +18,27 @@ function handleSearchInput(event) {
       episode.summary.toLocaleLowerCase().includes(searchQuery),
   );
   renderEpisodes(filteredEpisodes);
+}
+
+function populateSelectEpisodes() {
+  selectEpisode.appendChild(new Option("See all episodes", -1));
+  allEpisodes.forEach((episode) => {
+    let episodeOption = new Option(episode.name, episode.id);
+    selectEpisode.appendChild(episodeOption);
+  });
+
+  selectEpisode.addEventListener("change", function () {
+    searchInput.value = "";
+    const selectedEpisodeID = Number(this.value);
+    if (selectedEpisodeID === -1) {
+      renderEpisodes(allEpisodes);
+      return;
+    }
+    const selectedEpisode = allEpisodes.find(
+      (episode) => episode.id === selectedEpisodeID,
+    );
+    renderEpisodes([selectedEpisode]);
+  });
 }
 
 function renderEpisodes(episodes) {
