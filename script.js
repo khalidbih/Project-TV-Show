@@ -23,7 +23,9 @@ function handleSearchInput(event) {
 function populateSelectEpisodes() {
   selectEpisode.appendChild(new Option("See all episodes", -1));
   allEpisodes.forEach((episode) => {
-    let episodeOption = new Option(episode.name, episode.id);
+    const code = `S${String(episode.season).padStart(2, "0")}E${String(episode.number).padStart(2, "0")}`;
+    const episodeCodeName = `${code} - ${episode.name}`;
+    let episodeOption = new Option(episodeCodeName, episode.id);
     selectEpisode.appendChild(episodeOption);
   });
 
