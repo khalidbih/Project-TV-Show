@@ -65,9 +65,9 @@
   font-size: large;
   display: flex;
   justify-content: flex-start; 
-  padding: 20px 0;
+  padding: 10px 0;
   width: 85%; 
-  gap: 20px;
+  gap: 10px;
   align-items: center;
   margin: 0 auto;
 }
@@ -82,4 +82,8 @@
   border-style: solid;
   border-radius: 5px;
   font-size: large;
+  color: #888; 
+}
+.search_bar select:focus {
+  color: black;
 }

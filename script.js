@@ -1,9 +1,44 @@
 //You can edit ALL of the code here
-const allEpisodes = getAllEpisodes();
+let allEpisodes = [];
+let episodesLoaded = false;
+let episodesError = null;
+
+async function loadEpisodesOnce() {
+  if (episodesLoaded || episodesError) return;
+
+  try {
+    showLoadingMessage();
+
+    const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
+
+    if (!response.ok) {
+      throw new Error("Failed to load episodes");
+    }
+
+    allEpisodes = await response.json();
+    episodesLoaded = true;
+
+    setupAfterDataLoad();
+  } catch (error) {
+    episodesError = error;
+    showErrorMessage("Failed to load episodes. Please try again later.");
+  }
+}
+
+function showLoadingMessage() {
+  const rootElem = document.getElementById("root");
+  rootElem.innerHTML = "<p>Loading episodes, please wait...</p>";
+}
+
+function showErrorMessage(message) {
+  const rootElem = document.getElementById("root");
+  rootElem.innerHTML = `<p style="color:red;">${message}</p>`;
+}
+
 const searchInput = document.getElementById("searchQuery");
 const selectEpisode = document.getElementById("select-episode");
-function setup() {
-  //input event will only fire when the input in searchInput changes
+
+function setupAfterDataLoad() {
   searchInput.addEventListener("input", handleSearchInput);
   renderEpisodes(allEpisodes);
   populateSelectEpisodes(allEpisodes);
@@ -11,18 +46,20 @@ function setup() {
 
 function handleSearchInput(event) {
   selectEpisode.value = "";
-  searchQuery = event.target.value.toLowerCase();
-  filteredEpisodes = allEpisodes.filter(
+
+  const searchQuery = event.target.value.toLowerCase();
+  const filteredEpisodes = allEpisodes.filter(
     (episode) =>
       episode.name.toLowerCase().includes(searchQuery) ||
-      episode.summary.toLocaleLowerCase().includes(searchQuery),
+      (episode.summary && episode.summary.toLowerCase().includes(searchQuery)),
   );
   renderEpisodes(filteredEpisodes);
 }
 
-function populateSelectEpisodes() {
-  selectEpisode.appendChild(new Option("See all episodes", -1));
-  allEpisodes.forEach((episode) => {
+function populateSelectEpisodes(episodes) {
+  selectEpisode.innerHTML = "";
+  selectEpisode.appendChild(new Option("See All Episodes", -1));
+  episodes.forEach((episode) => {
     const code = `S${String(episode.season).padStart(2, "0")}E${String(episode.number).padStart(2, "0")}`;
     const episodeCodeName = `${code} - ${episode.name}`;
     let episodeOption = new Option(episodeCodeName, episode.id);
@@ -93,4 +130,4 @@ function renderEpisodes(episodes) {
     'Data provided by <a href="https://www.tvmaze.com/" target="_blank" rel="noopener">TVMaze.com</a>';
   rootElem.appendChild(attribution);
 }
-window.onload = setup;
+window.onload = loadEpisodesOnce;
