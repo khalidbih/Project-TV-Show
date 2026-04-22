@@ -83,7 +83,7 @@
   border-style: solid;
   border-radius: 5px;
   font-size: large;
-  color: #888; 
+  color: black; 
   background-color: #e7fbee;
 }
 .search_bar select:focus {

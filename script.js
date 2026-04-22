@@ -1,42 +1,71 @@
 //You can edit ALL of the code here
 let allEpisodes = [];
-let episodesLoaded = false;
-let episodesError = null;
+let allTVShows = [];
+let cacheTVShows = new Map();
 
-async function loadEpisodesOnce() {
-  if (episodesLoaded || episodesError) return;
+let tvShowsLoaded = false;
+let tvShowsFetchError = false;
 
+async function loadEpisodes(tvShowID) {
   try {
+    if (cacheTVShows.has(tvShowID)) {
+      allEpisodes = cacheTVShows.get(tvShowID);
+      renderEpisodes(allEpisodes);
+      populateSelectEpisodes(allEpisodes);
+      return;
+    }
+
     showLoadingMessage();
 
-    const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
-
+    const response = await fetch(
+      "https://api.tvmaze.com/shows/" + tvShowID + "/episodes",
+    ); // will not proceed past this line until function you are calling is finished
+    // remove your message here
     if (!response.ok) {
       throw new Error("Failed to load episodes");
     }
 
     allEpisodes = await response.json();
-    episodesLoaded = true;
-
+    cacheTVShows.set(tvShowID, allEpisodes);
     setupAfterDataLoad();
   } catch (error) {
-    episodesError = error;
     showErrorMessage("Failed to load episodes. Please try again later.");
+  }
+}
+async function loadTVShowsOnce() {
+  if (tvShowsLoaded || tvShowsFetchError) return;
+
+  try {
+    showLoadingMessage();
+
+    const response = await fetch("https://api.tvmaze.com/shows");
+
+    if (!response.ok) {
+      throw new Error("Failed to load tv shows");
+    }
+    allTVShows = await response.json();
+    tvShowsLoaded = true;
+    rootElem.innerHTML = "";
+    populateSelectTVShows(allTVShows);
+  } catch (error) {
+    tvShowsFetchError = error;
+    showErrorMessage("Failed to load tv Shows. Please try again later.");
   }
 }
 
 function showLoadingMessage() {
-  const rootElem = document.getElementById("root");
-  rootElem.innerHTML = "<p>Loading episodes, please wait...</p>";
+  rootElem.innerHTML = "<p>Loading data, please wait...</p>";
 }
 
 function showErrorMessage(message) {
-  const rootElem = document.getElementById("root");
   rootElem.innerHTML = `<p style="color:red;">${message}</p>`;
 }
 
+//helper functions, repeated code into single, separate files for different purposes(ui, api, error handling)
 const searchInput = document.getElementById("searchQuery");
 const selectEpisode = document.getElementById("select-episode");
+const selectTVShow = document.getElementById("select-tv-show");
+const rootElem = document.getElementById("root");
 
 function setupAfterDataLoad() {
   searchInput.addEventListener("input", handleSearchInput);
@@ -46,6 +75,12 @@ function setupAfterDataLoad() {
 
 function handleSearchInput(event) {
   selectEpisode.value = "";
+  // 2. Create and append the placeholder option first
+  let placeholder = new Option("Select an Episode...", "");
+  placeholder.disabled = true;
+  placeholder.selected = true;
+  placeholder.hidden = true;
+  selectEpisode.appendChild(placeholder);
 
   const searchQuery = event.target.value.toLowerCase();
   const filteredEpisodes = allEpisodes.filter(
@@ -77,6 +112,21 @@ function populateSelectEpisodes(episodes) {
       (episode) => episode.id === selectedEpisodeID,
     );
     renderEpisodes([selectedEpisode]);
+  });
+}
+
+function populateSelectTVShows(tvShows) {
+  tvShows.sort((a, b) =>
+    a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1,
+  );
+  tvShows.forEach((tvShow) => {
+    let tvShowOption = new Option(tvShow.name, tvShow.id);
+    selectTVShow.appendChild(tvShowOption);
+  });
+  selectTVShow.addEventListener("change", function () {
+    searchInput.value = "";
+    let selectedTvShowID = Number(this.value);
+    loadEpisodes(selectedTvShowID);
   });
 }
 
@@ -130,4 +180,4 @@ function renderEpisodes(episodes) {
     'Data provided by <a href="https://www.tvmaze.com/" target="_blank" rel="noopener">TVMaze.com</a>';
   rootElem.appendChild(attribution);
 }
-window.onload = loadEpisodesOnce;
+window.onload = loadTVShowsOnce;
