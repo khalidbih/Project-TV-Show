@@ -1,5 +1,6 @@
 #root {
   color: rgb(0, 0, 0); 
+  padding-bottom: 40px;
 }
 
 .episodes-container {
@@ -8,13 +9,13 @@
   column-gap: 25px;
   row-gap: 25px;
   box-sizing: border-box;
-  width: 85%;  /* to shift the container in the center  */
+  width: 85%; 
   margin: auto;
-  grid-auto-rows: 1fr; /* to maintain the same length of the rows */
+  grid-auto-rows: 1fr; 
+  margin-top: 10px;
 }
 
 .episode-card {
-  border: 2px solid #656262;
   border-radius: 10px;
   background-color: white;
   padding: 10px;
@@ -44,12 +45,13 @@
 }
 
 .episode-card h3 {
-  border: 1px solid #7d7878;
-  border-radius: 16px;
-  padding: 8px;
-  margin: 0 0 10px 0;
-  background-color: #e7fbee;
-  font-size: 20px;
+  border: none;
+  background: #f4f7f5;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 18px;
+  margin-bottom: 10px;
+
 }
 .episode-description {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -93,4 +95,56 @@
 .search_bar input:focus {
   background-color: white;
   outline: none;
+}
+.episode-card, .show-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 21, 255, 0.08);
+  border: none; 
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.episode-card:hover, .show-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0, 255, 187, 0.12);
+}
+.shows-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 25px;
+  row-gap: 25px;
+  width: 85%;
+  margin: auto;
+}
+.show-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+.show-header {
+  width: 85%;
+  margin: 20px auto;
+  padding: 15px 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+  font-size: 20px;
+  font-weight: bold;
+}
+.shows-container,
+.episodes-container {
+  width: 85%;
+  margin: auto;
+}
+.back-button {
+  margin-left: 7.5%;
+  padding: 10px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #e7fbee;
+}
+.search_bar_label {
+  background-color: #e7fbee;
+  padding: 12px 18px;
+  border-radius: 8px;
+  display: inline-block;
 }
