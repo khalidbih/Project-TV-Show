@@ -230,8 +230,8 @@ function renderEpisodes(episodes) {
   rootElem.appendChild(backButton);
 
   backButton.addEventListener("click", () => {
-    window.scrollTo(0, 0);
     setupShowsView();
+    window.scrollTo({ top: 0, behavior: "instant" });
   });
 
   searchBarLabel.textContent = `Displaying ${episodes.length}/${allEpisodes.length} episodes`;
